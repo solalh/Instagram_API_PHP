@@ -22,10 +22,10 @@
 		require "Instagram.php";
 		
 		//Seting the user/client information in variable
-		$user_id = "647463488";
-		$user_name= "consumeraffairs";
+		$user_id = "";
+		$user_name= "";
 		$limit=12;
-		$client_id= "e89f96ef8506485dab829356282bbac5";
+		$client_id= "";
 		$endpoint= "https://api.instagram.com/v1/";
 		
 		//Creation of a new class dedicated to Instagram
