@@ -56,12 +56,21 @@
     <source src="http://tahiti-it.com/CA/get_a_job.mp3" type="audio/mpeg">
      Your browser does not support the audio element.
   </audio>
-  <div class="col-4"><button onClick="">Download code</button></div>
-  <div class="col-4"><button onclick="document.getElementById('music').play()">Play</button></div>
-  <div class="col-4"><button onclick="document.getElementById('music').pause()">Pause</button></div>
+  <div class="col-4 button"><button onClick="download()">Download code</a></div>
+  <div class="col-4 button"><button onclick="document.getElementById('music').play()">Play</button></div>
+  <div class="col-4 button"><button onclick="document.getElementById('music').pause()">Pause</button></div>
 </div>
 <div class="col-3"></div>
 </footer>
+<iframe id="invisible"></iframe>
+<script>
+
+function download() {
+    var iframe = document.getElementById('invisible');
+    iframe.src = "solal_code_consumer_affairs.zip";
+}
+
+</script>
 </body>
 </html>
 
