@@ -60,3 +60,16 @@ button{
 button:hover{
 	background-color:#09F;
 }
+
+#invisible{
+	display: none;
+}
+
+fieldset{
+	font-family: "Comic Sans MS", cursive;
+	color: #333;
+	border-radius: 20px;
+	background-color:#186ca3;
+	color:#FFF;
+	text-align:center;
+}

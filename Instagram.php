@@ -2,17 +2,27 @@
 
 class Instagram {
 	
-	
-	private $endpoint;
 	private $client_id;
+	private $user_name;
+	private $limit;
+	const INSTAGRAM_URL = "https://api.instagram.com/v1/";
 
-	public function __construct($client_id, $endpoint)
+	//Constructor
+	public function __construct($client_id, $user_name, $limit)
 	{
 		$this->client_id = $client_id;
-		$this->endpoint = $endpoint;
+		$this->user_name = $user_name;
+		$this->limit = $limit;
 	}
 	
-	//private methode to call the API using curl 
+	//Generate the login url
+	//@return a String Instagram URL
+	public function getEndpoint()
+	{
+		return self::INSTAGRAM_URL . "tags/{$this->user_name}/media/recent?client_id={$this->client_id}&count={$this->limit}";
+	}
+	
+	//The call operator 
 	private function callAPI($url)
 	{
 		try{
@@ -27,15 +37,16 @@ class Instagram {
 			throw new Exception($e->getMessage());
 		}
 		
+		curl_close($curl);
+		
 		return $data;
 	}
 	
-	//Methode construct the url, this methode uses callAPI to get the data 
-	//Then parse data using Json decode
-	public function getRecentMedia($user_name, $limit=12)
+	//Return the decoded data from json
+	public function getDecodedData()
 	{
-		
-		$data = $this->callAPI($this->endpoint . "tags/$user_name/media/recent?client_id={$this->client_id}&count=$limit");
+		$endpoint = $this->getEndpoint();
+		$data = $this->callAPI($endpoint);
 		$json = json_decode($data);
 		
 		if($json->meta->code != 200){
@@ -43,5 +54,24 @@ class Instagram {
 		}
 		
 		return $json->data;
+	}
+	
+	//Display the recent media of the user
+	public function getRecentMedia(){
+		try{
+		
+		$media = $this->getDecodedData();
+		$htmlOutput = "";
+		
+		foreach($media as $medium){
+			$htmlOutput .= "<div class='col-2'><img src='{$medium->images->thumbnail->url}'/></div>";
+		}
+		
+		
+		return $htmlOutput;
+		
+		}catch(Exception $e){
+			die($e->getMessage());
+		}
 	}
 }
